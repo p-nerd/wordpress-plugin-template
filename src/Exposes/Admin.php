@@ -20,7 +20,7 @@ class Admin
     public function add_enqueue_scripts(): void
     {
         Vite\enqueue_asset(
-            Config::PATH . self::ADMIN_DIST_DIR,
+            Config::PATH.self::ADMIN_DIST_DIR,
             self::ADMIN_ENTRY_JS,
             [
                 "handle" => self::HANDLE,
@@ -33,19 +33,19 @@ class Admin
             [
                 "api_base_url" => home_url("/wp-json"),
                 "nonce" => wp_create_nonce("wp_rest"),
-                "admin_root_div_id" => Config::ADMIN_ROOT_DIV_ID
+                "admin_root_div_id" => Config::ADMIN_ROOT_DIV_ID,
             ]
         );
     }
 
-    private const HANDLE = Config::NAME_SLUG . "-admin-handle";
+    private const HANDLE = Config::NAME_SLUG."-admin-handle";
 
     public function add_admin_menu(): void
     {
-        $parent_page_title = Config::NAME . " Settings";
-        $parent_menu_title = Config::NAME . " Settings";
+        $parent_page_title = Config::NAME." Settings";
+        $parent_menu_title = Config::NAME." Settings";
         $capability = "manage_options";
-        $menu_slug = Config::NAME_SLUG . "-admin";
+        $menu_slug = Config::NAME_SLUG."-admin";
         $parent_callback = [$this, "callback_menu_page_template"];
         $icon_url = "dashicons-editor-justify";
         $position = 80;

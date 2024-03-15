@@ -9,6 +9,14 @@ export default defineConfig({
             input: "src/index.tsx",
             outDir: "dist",
         }),
+        {
+            name: "override-config",
+            config: () => ({
+                build: {
+                    manifest: "manifest.json",
+                },
+            }),
+        },
         solid(),
         tsconfigPaths(),
     ],
