@@ -1,6 +1,7 @@
 function App() {
-    console.log(localize)
-    return <div id="ff-div">Hello From Solid xx 4</div>;
+    return (
+        <div class="bg-green-500 text-5xl">Hello From Solid xx 4</div>
+    );
 }
 
 export default App;
