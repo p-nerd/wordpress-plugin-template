@@ -1,0 +1,30 @@
+{
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Shihab Mahamud",
+            "email": "shihab4t@gmail.com"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    },
+    "require": {
+        "kucrut/vite-for-wp": "^0.8.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.13"
+    },
+    "scripts": {
+        "format": [
+            "./vendor/bin/pint -v"
+        ]
+    }
+}
