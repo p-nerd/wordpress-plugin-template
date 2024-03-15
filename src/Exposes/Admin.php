@@ -45,7 +45,7 @@ class Admin
         $parent_page_title = Config::NAME." Settings";
         $parent_menu_title = Config::NAME." Settings";
         $capability = "manage_options";
-        $menu_slug = Config::NAME_SLUG."-admin";
+        $menu_slug = Config::NAME_SLUG."-settings";
         $parent_callback = [$this, "callback_menu_page_template"];
         $icon_url = "dashicons-editor-justify";
         $position = 80;
