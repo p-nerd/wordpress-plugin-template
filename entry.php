@@ -17,11 +17,11 @@ if (file_exists(dirname(__FILE__)."/vendor/autoload.php")) {
     include_once dirname(__FILE__)."/vendor/autoload.php";
 }
 
+use Src\Life;
+
 define("SHIHAB_PLUGIN_DIR_URL", substr(plugin_dir_url(__FILE__), 0, -1));
 define("SHIHAB_PLUGIN_BASENAME", substr(plugin_basename(__FILE__), 0, -1));
 define("SHIHAB_PLUGIN_DIR_PATH", substr(plugin_dir_path(__FILE__), 0, -1));
-
-use Src\Life;
 
 register_activation_hook(__FILE__, fn () => Life::activate());
 register_deactivation_hook(__FILE__, fn () => Life::deactivate());

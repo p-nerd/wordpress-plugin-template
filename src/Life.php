@@ -3,6 +3,7 @@
 namespace Src;
 
 use Src\Exposes\Admin;
+use Src\RESTs\Settings;
 
 class Life
 {
@@ -18,6 +19,7 @@ class Life
     {
         $services = [
             Admin::class,
+            Settings::class,
         ];
 
         foreach ($services as $class) {

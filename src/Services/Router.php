@@ -1,23 +1,22 @@
 <?php
 
-namespace Includes\Services;
+namespace Src\Services;
 
+use Src\Config;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
 
 class Router
 {
-    private const BASE_URL = "/wpt/v1";
-
-    public static function get_body(WP_REST_Request $request): array
+    public static function body(WP_REST_Request $request): array
     {
         $body = $request->get_json_params();
 
         return $body == null ? [] : $body;
     }
 
-    public static function response2(int $status_code, array|object $data): WP_REST_Response
+    public static function response(int $status_code, array|object $data): WP_REST_Response
     {
         $response = new WP_REST_Response($data);
         $response->set_status($status_code < 100 || $status_code > 599 ? 500 : $status_code);
@@ -25,42 +24,37 @@ class Router
         return $response;
     }
 
-    public static function route($class, string $method, string $routeName, string $callback, string $permissionCallback): void
+    public static function route(string $method, string $resource_name, string $route_name, array $callback, array $permission_callback): void
     {
-        $namespace = self::BASE_URL.$class::RESOURCE_NAME;
-        $route = $routeName;
-        $args = [
-            'methods' => $method,
-            'callback' => [$class, $callback],
-            'permission_callback' => [$class, $permissionCallback],
-        ];
-        register_rest_route($namespace, $route, $args);
+        register_rest_route(
+            Config::REST_API_PREFIX.$resource_name,
+            $route_name,
+            [
+                'methods' => $method,
+                'callback' => $callback,
+                'permission_callback' => $permission_callback,
+            ]
+        );
     }
 
-    public static function setPermalinkToPostname(): void
+    public static function get(string $resource_name, string $route_name, array $callback, array $permission_callback): void
     {
-        global $wp_rewrite;
-        $wp_rewrite->set_permalink_structure('/%postname%/');
+        Router::route("GET", $resource_name, $route_name, $callback, $permission_callback);
     }
 
-    public static function get($class, string $routeName, string $callback, string $permissionCallback): void
+    public static function post(string $resource_name, string $route_name, array $callback, array $permission_callback): void
     {
-        Router::route($class, "GET", $routeName, $callback, $permissionCallback);
+        Router::route("POST", $resource_name, $route_name, $callback, $permission_callback);
     }
 
-    public static function post($class, string $routeName, string $callback, string $permissionCallback): void
+    public static function patch(string $resource_name, string $route_name, array $callback, array $permission_callback): void
     {
-        Router::route($class, "POST", $routeName, $callback, $permissionCallback);
+        Router::route("PATCH", $resource_name, $route_name, $callback, $permission_callback);
     }
 
-    public static function delete($class, string $routeName, string $callback, string $permissionCallback): void
+    public static function delete(string $resource_name, string $route_name, array $callback, array $permission_callback): void
     {
-        Router::route($class, "DELETE", $routeName, $callback, $permissionCallback);
-    }
-
-    public static function patch($class, string $routeName, string $callback, string $permissionCallback): void
-    {
-        Router::route($class, "PATCH", $routeName, $callback, $permissionCallback);
+        Router::route("DELETE", $resource_name, $route_name, $callback, $permission_callback);
     }
 
     public static function public_can_access(): bool
@@ -68,12 +62,12 @@ class Router
         return true;
     }
 
-    public static function noOneCanAccess(): bool
+    public static function noone_can_access(): bool
     {
         return false;
     }
 
-    public static function logged_in_user_emailCanAccess(): bool
+    public static function is_user_logged_in_can_access(): bool
     {
         return is_user_logged_in();
     }

@@ -16,4 +16,6 @@ class Config
 
     //@MUST: if you change it, also must change in admin/tailwind.config.js
     public const ADMIN_ROOT_DIV_ID = "wordpress-plugin-boilerplate-admin-root-id";
+
+    public const REST_API_PREFIX = "/wpt/v1";
 }
